@@ -27,7 +27,7 @@ class Player(pygame.sprite.Sprite):
         self.obsticle_sprites = obstacle_sprites
 
     def import_player_assets(self):
-        character_path = './assets/chrono/player'
+        character_path = './assets/chrono/player/'
         self.animations = {'up':[],'down':[],'left':[],'right':[],
                            'right_idle':[],'left_idle':[],'up_idle':[],'down_idle':[],
                            'right_attack':[],'left_attack':[],'up_attack':[],'down_attack':[]} 
@@ -132,7 +132,7 @@ class Player(pygame.sprite.Sprite):
             self.frame_index = 0
 
         # set the image
-        self.image = animation[0]
+        self.image = animation[int(self.frame_index)]
         self.rect = self.image.get_rect(center = self.hitbox.center)
 
 
@@ -141,5 +141,5 @@ class Player(pygame.sprite.Sprite):
         self.input()
         self.cooldowns()
         self.get_status()
-        # self.animate()
+        self.animate()
         self.move(self.speed)
