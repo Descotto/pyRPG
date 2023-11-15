@@ -12,6 +12,27 @@ ITEM_BOX_SIZE = 80
 UI_FONT = './assets/chrono/font/joystix.ttf'
 UI_FONT_SIZE = 18
 
+# controllers
+BTN_HEIGHT = 32
+BTN_WIDTH = 32
+UP_BTN_X = 100          
+UP_BTN_Y = 600
+DOWN_BTN_X = 100
+DOWN_BTN_Y = 700
+LEFT_BTN_X = 45          
+LEFT_BTN_Y = 650
+RIGHT_BTN_X = 155
+RIGHT_BTN_Y = 650
+ATTACK_BTN_X = 700          
+ATTACK_BTN_Y = 600
+MAGIC_BTN_X = 600
+MAGIC_BTN_Y = 650
+SWITCH_BTN_X = 400
+SWITCH_BTN_Y = 700
+
+
+
+
 # general colors
 WATER_COLOR = '#71ddee'
 UI_BG_COLOR = '#222222'

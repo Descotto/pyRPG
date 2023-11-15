@@ -1,6 +1,8 @@
 import pygame
 from settings import *
 from support import import_folder
+from controls import *
+
 
 
 
@@ -23,6 +25,15 @@ class Player(pygame.sprite.Sprite):
         self.attack_cooldown = 700
         self.attack_time = pygame.time.get_ticks()
         self.obsticle_sprites = obstacle_sprites
+
+        # controls
+        self.check = Control.display_controller
+        self.control = ''
+        self.buttons = ['up', 'down', 'left', 'right', 'attack', 'magic', 'switch']
+       
+        
+                         
+                       
 
         # weapons
         self.create_attack = create_attack
@@ -83,7 +94,7 @@ class Player(pygame.sprite.Sprite):
                 self.attack_time = pygame.time.get_ticks()
                 print('Magic')
 
-            if keys[pygame.K_LEFT] and self.can_switch_weapon:
+            if keys[pygame.K_LEFT]:
                 self.can_switch_weapon = False
                 self.weapon_switch_time = pygame.time.get_ticks()
                 if self.weapon_index < len(list(weapon_data.keys())) -1:
@@ -92,6 +103,7 @@ class Player(pygame.sprite.Sprite):
                     self.weapon_index = 0
                 self.weapon = list(weapon_data.keys())[self.weapon_index]
 
+ 
     def get_status(self):
 
         # idle status
@@ -119,7 +131,9 @@ class Player(pygame.sprite.Sprite):
         self.hitbox.y += self.direction.y * speed
         self.collision('vertical')
         self.rect.center = self.hitbox.center
-        
+
+    def check_clicked(self):
+        self.control = ''    
 
     def collision(self, direction):
         if direction == 'horizontal':
