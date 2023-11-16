@@ -15,20 +15,25 @@ UI_FONT_SIZE = 18
 # controllers
 BTN_HEIGHT = 32
 BTN_WIDTH = 32
-UP_BTN_X = 100          
-UP_BTN_Y = 600
+
+UP_BTN_X = 100 
 DOWN_BTN_X = 100
-DOWN_BTN_Y = 700
 LEFT_BTN_X = 45          
-LEFT_BTN_Y = 650
 RIGHT_BTN_X = 155
-RIGHT_BTN_Y = 650
 ATTACK_BTN_X = 700          
-ATTACK_BTN_Y = 600
 MAGIC_BTN_X = 600
+SWITCH_A_BTN_X = 400
+SWITCH_M_BTN_X = 300
+
+UP_BTN_Y = 600
+DOWN_BTN_Y = 700
+LEFT_BTN_Y = 650
+RIGHT_BTN_Y = 650
+ATTACK_BTN_Y = 600
 MAGIC_BTN_Y = 650
-SWITCH_BTN_X = 400
-SWITCH_BTN_Y = 700
+SWITCH_A_BTN_Y = 700
+SWITCH_M_BTN_Y = 700
+
 
 
 
@@ -52,4 +57,11 @@ weapon_data = {
     'axe': {'cooldown': 300, 'damage': 20, 'graphic':'./assets/chrono/weapons/axe/full.png'},
     'rapier': {'cooldown': 50, 'damage': 8, 'graphic':'./assets/chrono/weapons/rapier/full.png'},
     'sai': {'cooldown': 80, 'damage': 10, 'graphic':'./assets/chrono/weapons/sai/full.png'}
+}
+
+
+# magic
+magic_data = {
+    'flame': {'strength': 5, 'cost': 20, 'graphic':'./assets/chrono/particles/flame/fire.png'},
+    'heal': {'strength': 5, 'cost': 20, 'graphic':'./assets/chrono/particles/heal/heal.png'}
 }
