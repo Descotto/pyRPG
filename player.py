@@ -27,10 +27,7 @@ class Player(pygame.sprite.Sprite):
         self.obsticle_sprites = obstacle_sprites
 
         # controls
-        self.check = Control.display_controller
-        self.control = ''
-        self.buttons = ['up', 'down', 'left', 'right', 'attack', 'magic', 'switch']
-       
+        self.clicked = False
         
                          
                        
@@ -66,35 +63,41 @@ class Player(pygame.sprite.Sprite):
         if not self.attacking:
             keys = pygame.key.get_pressed()
             # movement input
-            if keys[pygame.K_w]:
+            if keys[pygame.K_w] or self.clicked == 'up':
                 self.status = 'up'
                 self.direction.y = -1
-            elif keys[pygame.K_s]:
+                self.clicked == False
+            elif keys[pygame.K_s] or self.clicked == 'down':
                 self.status = 'down'
                 self.direction.y = 1
+                self.clicked == False
             else:
                 self.direction.y = 0
-            if keys[pygame.K_a]:
+            if keys[pygame.K_a] or self.clicked == 'left':
                 self.status = 'left'
                 self.direction.x = -1
-            elif keys[pygame.K_d]:
+                self.clicked == False
+            elif keys[pygame.K_d] or self.clicked == 'right':
                 self.status = 'right'
                 self.direction.x = 1
+                self.clicked == False
             else:
                 self.direction.x = 0
 
             # attack input
-            if keys[pygame.K_SPACE]:
+            if keys[pygame.K_SPACE] or self.clicked == 'attack':
                 self.attacking = True
                 self.attack_time = pygame.time.get_ticks()
                 self.create_attack()
+                self.clicked == False
 
-            if keys[pygame.K_RSHIFT]:
+            if keys[pygame.K_RSHIFT] or self.clicked == 'magic':
                 self.attacking = True
                 self.attack_time = pygame.time.get_ticks()
+                self.clicked == False
                 print('Magic')
 
-            if keys[pygame.K_LEFT]:
+            if keys[pygame.K_LEFT] or self.clicked == 'switch':
                 self.can_switch_weapon = False
                 self.weapon_switch_time = pygame.time.get_ticks()
                 if self.weapon_index < len(list(weapon_data.keys())) -1:
@@ -102,6 +105,7 @@ class Player(pygame.sprite.Sprite):
                 else:
                     self.weapon_index = 0
                 self.weapon = list(weapon_data.keys())[self.weapon_index]
+                self.clicked == False
 
  
     def get_status(self):
@@ -180,6 +184,7 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         self.input()
+        
         self.cooldowns()
         self.get_status()
         self.animate()

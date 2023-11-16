@@ -64,6 +64,9 @@ class Level:
 
         self.player = Player((1700,450), [self.visible_sprites], self.obstacle_sprites, self.create_attack, self.destroy_attack)
 
+
+
+
     def create_attack(self):
         self.current_attack = Weapon(self.player, [self.visible_sprites])
 
@@ -77,7 +80,9 @@ class Level:
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
         self.ui.display(self.player)
-        self.controller.display_controller()
+
+        # touch screen controller below
+        # self.controller.display_controller(self.player)
 
 
 class YSortCameraGroup(pygame.sprite.Group):

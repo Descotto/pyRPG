@@ -9,7 +9,7 @@ class Control:
         self.display_surface = pygame.display.get_surface()
         self.buttons = ['up', 'down', 'left', 'right', 'attack', 'magic', 'switch']       
 
-
+        self.clicked = ''
     # Rect objects for buttons
         self.button_rects = {
             'up': pygame.Rect(100, 600, BTN_WIDTH, BTN_HEIGHT),
@@ -22,7 +22,7 @@ class Control:
         }
 
    
-    def display_controller(self):
+    def display_controller(self, player):
                 for button in self.buttons:
                     full_path = f'./assets/chrono/buttons/{button}/{button}.png'
                     image = pygame.image.load(full_path).convert_alpha()
@@ -51,6 +51,6 @@ class Control:
                     mouse_pos = pygame.mouse.get_pos()
                     if rect.collidepoint(mouse_pos):
                         self.clicked = button
+                        player.clicked = button
                         print(f'Clicked on {button} button')
                         
-
