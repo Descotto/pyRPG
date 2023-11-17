@@ -28,6 +28,7 @@ class Entity(pygame.sprite.Sprite):
                         self.hitbox.right = sprite.hitbox.left
                     if self.direction.x < 0:  # moving left
                         self.hitbox.left = sprite.hitbox.right
+                        
 
         if direction == 'vertical':
             for sprite in self.obstacle_sprites:

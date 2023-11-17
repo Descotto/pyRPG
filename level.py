@@ -103,8 +103,8 @@ class Level:
         self.visible_sprites.enemy_update(self.player)
         self.ui.display(self.player)
 
-        # touch screen controller below
-        # self.controller.display_controller(self.player)
+        # TOUCH SCREEN
+        self.controller.display_controller(self.player)
 
 
 class YSortCameraGroup(pygame.sprite.Group):

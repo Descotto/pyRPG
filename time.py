@@ -1,1 +1,1 @@
-print('3:15:10 min')
+print('4:43:40 min')

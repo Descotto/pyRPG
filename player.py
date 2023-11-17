@@ -78,6 +78,8 @@ class Player(Entity):
                 self.clicked == False
             else:
                 self.direction.y = 0
+                
+                
             if keys[pygame.K_a] or self.clicked == 'left':
                 self.status = 'left'
                 self.direction.x = -1
@@ -88,6 +90,7 @@ class Player(Entity):
                 self.clicked == False
             else:
                 self.direction.x = 0
+                self.clicked = False
 
             # attack input
             if keys[pygame.K_SPACE] or self.clicked == 'attack':
