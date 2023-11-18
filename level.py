@@ -104,7 +104,7 @@ class Level:
         self.ui.display(self.player)
 
         # TOUCH SCREEN
-        self.controller.display_controller(self.player)
+        # self.controller.display_controller(self.player)
 
 
 class YSortCameraGroup(pygame.sprite.Group):
@@ -132,11 +132,6 @@ class YSortCameraGroup(pygame.sprite.Group):
         floor_upset_pos = self.floor_rect.topleft - self.offset
         self.display_surface.blit(self.floor_surf,floor_upset_pos)
 
-        # controls
-        btn_x = floor_upset_pos  # X-coordinate of the btn's top-left corner
-        btn_y = 100  # Y-coordinate of the btn's top-left corner
-        btn_size = 32  # Size of the btn (width and height)
-        btn_color = (255, 0, 0)
         
         
 

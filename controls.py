@@ -52,5 +52,5 @@ class Control:
                     if rect.collidepoint(mouse_pos):
                         self.clicked = button
                         player.clicked = button
-                        print(f'Clicked on {button} button')
+                        
                         
