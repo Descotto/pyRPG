@@ -102,17 +102,18 @@ class Player(Entity):
                 self.attacking = True
                 self.attack_time = pygame.time.get_ticks()
                 self.create_attack()
+                print(magic_data['heal']['strength'])
                 self.clicked == False
 
             if keys[pygame.K_RSHIFT] or self.clicked == 'magic':
                 self.attacking = True
                 self.attack_time = pygame.time.get_ticks()
                 style = list(magic_data.keys())[self.magic_index]
-                strength = list(magic_data.values())['strength'] + self.stats['magic']
-                cost = list(magic_data.values())['cost']
+                strength = int(magic_data[style]['strength'] + self.stats['magic'])
+                cost = int(magic_data[style]['cost'])
                 self.create_magic(style,strength,cost)
                 self.clicked == False
-                print('Magic')
+                
 
             if keys[pygame.K_LEFT] and self.can_switch_weapon or self.clicked == 'switch' and self.can_switch_weapon:
                 self.can_switch_weapon = False
@@ -203,6 +204,12 @@ class Player(Entity):
         weapon_damage = weapon_data[self.weapon]['damage']
         return base_damage + weapon_damage
 
+    def energy_recovery(self):
+        if self.energy < self.stats['energy']:
+            self.energy += 0.02
+        else:
+            self.energy = self.stats['energy']
+
     def update(self):
         self.input()
         
@@ -210,3 +217,4 @@ class Player(Entity):
         self.get_status()
         self.animate()
         self.move(self.speed)
+        self.energy_recovery()
