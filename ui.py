@@ -24,13 +24,14 @@ class UI:
             magic = pygame.image.load(magic['graphic']).convert_alpha()
             self.magic_graphics.append(magic)
 
-    def show_bar(self, current, max_ammount,bg_rect,color):
+    def show_bar(self, current, max_amount,bg_rect,color):
+
 
         # draw bg
         pygame.draw.rect(self.display_surface,UI_BG_COLOR,bg_rect)
 
         # convert stats to pixel
-        ratio = current / max_ammount
+        ratio = current / max_amount
         current_width = bg_rect.width * ratio
         current_rect = bg_rect.copy()
         current_rect.width = current_width
@@ -38,6 +39,14 @@ class UI:
         # draw the bar
         pygame.draw.rect(self.display_surface,color,current_rect)
         pygame.draw.rect(self.display_surface,UI_BG_COLOR,bg_rect,3)
+
+        # Display current and max health text
+        health_text = f"{int(current)}/{int(max_amount)}"
+        small_font = pygame.font.Font(None, 24)  # You can adjust the font size here
+        text_surf = small_font.render(health_text, False, TEXT_COLOR)
+        text_rect = text_surf.get_rect(center=(bg_rect.centerx, bg_rect.centery))
+
+        self.display_surface.blit(text_surf, text_rect)
 
     def show_exp(self,exp):
         text_surf = self.font.render(str(int(exp)),False,TEXT_COLOR)

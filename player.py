@@ -28,6 +28,9 @@ class Player(Entity):
 
         # controls
         self.clicked = False
+
+        # class
+        self.job = 'BattleMage'
         
                          
                        
@@ -35,7 +38,7 @@ class Player(Entity):
         # weapons
         self.create_attack = create_attack
         self.destroy_attack = destroy_attack
-        self.weapon_index = 0
+        self.weapon_index = LevelChart[self.job]['weapons']['primary']
         self.weapon = list(weapon_data.keys())[self.weapon_index]
         self.can_switch_weapon = True
         self.weapon_switch_time = None
@@ -52,7 +55,6 @@ class Player(Entity):
         # Stats caps
         self.level = 1
         self.level_cap = 10
-        self.job = 'red_mage'
         self.stats = {
             'health': LevelChart[self.job][str(self.level)]['hp'],
             'energy':LevelChart[self.job][str(self.level)]['mp'],
@@ -126,31 +128,56 @@ class Player(Entity):
                 self.attacking = True
                 self.attack_time = pygame.time.get_ticks()
                 style = list(magic_data.keys())[self.magic_index]
-                strength = int(magic_data[style]['strength'] + self.stats['magic'])
-                cost = int(magic_data[style]['cost'])
-                self.create_magic(style,strength,cost)
-                self.clicked == False
-                
+                if self.job == 'BattleMage' or self.job == 'Warlock':
+                    strength = int(magic_data[style]['strength'] + self.stats['magic'])
+                    cost = int(magic_data[style]['cost'])
+                    self.create_magic(style,strength,cost)
+                    self.clicked == False
+                elif style == 'flame' and self.job == 'Arcane_Reaver':
+                    strength = int(magic_data[style]['strength'] + self.stats['magic'])
+                    cost = int(magic_data[style]['cost'])
+                    self.create_magic(style,strength,cost)
+                    self.clicked == False            
 
             if keys[pygame.K_LEFT] and self.can_switch_weapon or self.clicked == 'switch' and self.can_switch_weapon:
                 self.can_switch_weapon = False
                 self.weapon_switch_time = pygame.time.get_ticks()
-                if self.weapon_index < len(list(weapon_data.keys())) -1:
-                    self.weapon_index += 1
-                else:
-                    self.weapon_index = 0
-                self.weapon = list(weapon_data.keys())[self.weapon_index]
+                # SWITCH WEAPONS
+                # BATTLEMAGE
+                if self.job == 'BattleMage':
+                    if self.weapon_index == 0:
+                        self.weapon_index = 3
+                        self.weapon = list(weapon_data.keys())[self.weapon_index]
+                    elif self.weapon_index == 3:
+                        self.weapon_index = 0
+                        self.weapon = list(weapon_data.keys())[self.weapon_index]
+                # ARCANE REAVER
+                if self.job == 'Arcane_Reaver':
+                    if self.weapon_index == 1:
+                        self.weapon_index = 2
+                        self.weapon = list(weapon_data.keys())[self.weapon_index]
+                    elif self.weapon_index == 2:
+                        self.weapon_index = 1
+                        self.weapon = list(weapon_data.keys())[self.weapon_index]
+                # WARLOCK
+                if self.job == 'BattleMage':
+                    pass
+                    
+                    
                 self.clicked == False
 
             if keys[pygame.K_RIGHT] and self.can_switch_magic or self.clicked == 'switch' and self.can_switch_magic:
                 self.can_switch_magic = False
                 self.magic_switch_time = pygame.time.get_ticks()
-                if self.magic_index < len(list(magic_data.keys())) -1:
-                    self.magic_index += 1
+                if self.magic == 'flame' and self.job == 'Arcane_Reaver':
+                    pass
                 else:
-                    self.magic_index = 0
-                self.magic = list(magic_data.keys())[self.magic_index]
-                self.clicked == False
+                    if self.magic_index < len(list(magic_data.keys())) -1:
+                        self.magic_index += 1
+                    else:
+                        self.magic_index = 0
+                    self.magic = list(magic_data.keys())[self.magic_index]
+                    self.clicked == False
 
     def get_status(self):
 
@@ -227,10 +254,16 @@ class Player(Entity):
         return base_damage + spell_damage
 
     def energy_recovery(self):
-        if self.energy < self.stats['energy']:
-            self.energy += 0.02
-        else:
-            self.energy = self.stats['energy']
+        if self.job == 'BattleMage':
+            if self.energy < self.stats['energy']:
+                self.energy += 0.02
+            else:
+                self.energy = self.stats['energy']
+        elif self.job == 'Abyssal_Reaver':
+            if self.energy < self.stats['energy']:
+                self.energy += 0.09
+            else:
+                self.energy = self.stats['energy']
 
     def gain_exp(self,exp_value):
         current_exp_cap = self.exp_cap
