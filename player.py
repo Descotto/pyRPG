@@ -30,7 +30,7 @@ class Player(Entity):
         self.clicked = False
 
         # class
-        self.job = 'BattleMage'
+        self.job = 'Arcane_Reaver'
         
                          
                        
@@ -62,12 +62,14 @@ class Player(Entity):
             'magic':LevelChart[self.job][str(self.level)]['mnd'],
             'magic_power': LevelChart[self.job][str(self.level)]['int'],
             'speed':LevelChart[self.job][str(self.level)]['speed'],
+            'recovery_rate':LevelChart[self.job]['recovery_rate'],
             'exp_cap': 100,
             'burst': 0}
         self.health = self.stats['health']
         self.energy = self.stats['energy']
         self.exp_cap = self.stats['exp_cap']
         self.speed = self.stats['speed']
+        self.recovery_rate = self.stats['recovery_rate']
 
         # experience and bursts
         self.exp = 1
@@ -254,16 +256,8 @@ class Player(Entity):
         return base_damage + spell_damage
 
     def energy_recovery(self):
-        if self.job == 'BattleMage':
-            if self.energy < self.stats['energy']:
-                self.energy += 0.02
-            else:
-                self.energy = self.stats['energy']
-        elif self.job == 'Abyssal_Reaver':
-            if self.energy < self.stats['energy']:
-                self.energy += 0.09
-            else:
-                self.energy = self.stats['energy']
+        if self.energy < self.stats['energy']:
+            self.energy += self.recovery_rate
 
     def gain_exp(self,exp_value):
         current_exp_cap = self.exp_cap

@@ -25,8 +25,6 @@ class UI:
             self.magic_graphics.append(magic)
 
     def show_bar(self, current, max_amount,bg_rect,color):
-
-
         # draw bg
         pygame.draw.rect(self.display_surface,UI_BG_COLOR,bg_rect)
 
@@ -42,7 +40,7 @@ class UI:
 
         # Display current and max health text
         health_text = f"{int(current)}/{int(max_amount)}"
-        small_font = pygame.font.Font(None, 24)  # You can adjust the font size here
+        small_font = pygame.font.Font(None, 24)  
         text_surf = small_font.render(health_text, False, TEXT_COLOR)
         text_rect = text_surf.get_rect(center=(bg_rect.centerx, bg_rect.centery))
 

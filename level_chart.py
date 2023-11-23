@@ -12,7 +12,8 @@ LevelChart = {
         '8': {'hp': 112,'mp':62, 'str': 6, 'vit': 10, 'int': 11, 'mnd': 11, 'speed': 5},
         '9': {'hp': 124,'mp':68, 'str': 10, 'vit': 10, 'int': 12, 'mnd': 12, 'speed': 5},
         '10': {'hp': 136,'mp':74, 'str': 12, 'vit': 12, 'int': 13, 'mnd': 13, 'speed': 5},
-        'weapons': {'primary': 0, 'secondary': 3}
+        'weapons': {'primary': 0, 'secondary': 3},
+        'recovery_rate': 0.02
     },
     'Arcane_Reaver': {
         '1': {'hp': 30,'mp':16, 'str': 8, 'vit': 7, 'int': 7, 'mnd': 5, 'speed': 5},
@@ -25,7 +26,8 @@ LevelChart = {
         '8': {'hp': 121,'mp':44, 'str': 13, 'vit': 11, 'int': 11, 'mnd': 8, 'speed': 5},
         '9': {'hp': 134,'mp':48, 'str': 14, 'vit': 12, 'int': 12, 'mnd': 8, 'speed': 5},
         '10': {'hp': 147,'mp':52, 'str': 15, 'vit': 13, 'int': 13, 'mnd': 9, 'speed': 5},
-        'weapons': {'primary': 1, 'secondary': 2}
+        'weapons': {'primary': 1, 'secondary': 2},
+        'recovery_rate': 0.04
     },
     'Warlock': {
         '1': {'hp': 25,'mp':24, 'str': 5, 'vit': 5, 'int': 8, 'mnd': 6, 'speed': 5},
@@ -38,7 +40,8 @@ LevelChart = {
         '8': {'hp': 95,'mp':80, 'str': 8, 'vit': 8, 'int': 13, 'mnd': 10, 'speed': 5},
         '9': {'hp': 105,'mp':88, 'str': 9, 'vit': 9, 'int': 14, 'mnd': 10, 'speed': 5},
         '10': {'hp': 115,'mp':96, 'str': 10, 'vit': 10, 'int': 15, 'mnd': 11, 'speed': 5},
-        'weapons': {'primary': 4}
+        'weapons': {'primary': 4},
+        'recovery_rate': 0.06
     }
 }
 

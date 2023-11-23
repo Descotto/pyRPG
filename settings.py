@@ -62,8 +62,8 @@ weapon_data = {
 
 # magic
 magic_data = {
-    'flame': {'strength': 5, 'cost': 20, 'graphic':'./assets/chrono/particles/flame/fire.png'},
-    'heal': {'strength': 5, 'cost': 20, 'graphic':'./assets/chrono/particles/heal/heal.png'}
+    'flame': {'strength': 5, 'cost': 5, 'graphic':'./assets/chrono/particles/flame/fire.png'},
+    'heal': {'strength': 5, 'cost': 8, 'graphic':'./assets/chrono/particles/heal/heal.png'}
 }
 
 # enemies
