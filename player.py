@@ -3,6 +3,7 @@ from settings import *
 from support import import_folder
 from controls import *
 from entity import Entity
+from level_chart import *
 
 
 
@@ -47,12 +48,28 @@ class Player(Entity):
         self.can_switch_magic = True
         self.magic_switch_time = None
 
-        # Stats
-        self.stats = {'health': 100, 'energy':60, 'attack':10, 'magic':4,'speed':5}
+
+        # Stats caps
+        self.level = 1
+        self.level_cap = 10
+        self.job = 'red_mage'
+        self.stats = {
+            'health': LevelChart[self.job][str(self.level)]['hp'],
+            'energy':LevelChart[self.job][str(self.level)]['mp'],
+            'attack':LevelChart[self.job][str(self.level)]['str'],
+            'magic':LevelChart[self.job][str(self.level)]['mnd'],
+            'magic_power': LevelChart[self.job][str(self.level)]['int'],
+            'speed':LevelChart[self.job][str(self.level)]['speed'],
+            'exp_cap': 100,
+            'burst': 0}
         self.health = self.stats['health']
         self.energy = self.stats['energy']
-        self.exp = 1
+        self.exp_cap = self.stats['exp_cap']
         self.speed = self.stats['speed']
+
+        # experience and bursts
+        self.exp = 1
+        self.burst = 0
 
         # damage timers
         self.vulnerable = True
@@ -102,7 +119,7 @@ class Player(Entity):
                 self.attacking = True
                 self.attack_time = pygame.time.get_ticks()
                 self.create_attack()
-                print(magic_data['heal']['strength'])
+               
                 self.clicked == False
 
             if keys[pygame.K_RSHIFT] or self.clicked == 'magic':
@@ -204,11 +221,44 @@ class Player(Entity):
         weapon_damage = weapon_data[self.weapon]['damage']
         return base_damage + weapon_damage
 
+    def get_full_magic_damage(self):
+        base_damage = self.stats['magic']
+        spell_damage = magic_data[self.magic]['strength']
+        return base_damage + spell_damage
+
     def energy_recovery(self):
         if self.energy < self.stats['energy']:
             self.energy += 0.02
         else:
             self.energy = self.stats['energy']
+
+    def gain_exp(self,exp_value):
+        current_exp_cap = self.exp_cap
+        self.exp += (exp_value // self.level)
+        if self.exp >= current_exp_cap:
+            self.level_up(current_exp_cap)
+            print('BURSTING', self.burst)
+        else:
+            pass
+
+    def level_up(self,current_exp_cap):
+        if self.level < self.level_cap:
+            self.level += 1
+            self.exp_cap = (int(self.exp_cap * 2) + int(0.25 * self.exp_cap))
+            self.stats = {
+            'health': LevelChart[self.job][str(self.level)]['hp'],
+            'energy':LevelChart[self.job][str(self.level)]['mp'],
+            'attack':LevelChart[self.job][str(self.level)]['str'],
+            'magic':LevelChart[self.job][str(self.level)]['mnd'],
+            'magic_power': LevelChart[self.job][str(self.level)]['int'],
+            'speed':LevelChart[self.job][str(self.level)]['speed'],
+            'exp_cap': self.exp_cap}
+            self.health = self.stats['health']
+            self.energy = self.stats['energy']
+            print('LEVEL UP! level:',self.level)
+            print('NEXT LEVEL = ', self.exp_cap, 'TEST HP =', self.stats['health'])
+        else:
+            self.exp = self.exp_cap
 
     def update(self):
         self.input()

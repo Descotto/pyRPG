@@ -2,6 +2,7 @@ import pygame
 from settings import *
 from entity import Entity
 from support import *
+from random import randint
 
 class Enemy(Entity):
     def __init__(self, monster_name,pos,groups, obstacle_sprites,damage_player,trigger_death_particles):
@@ -116,13 +117,15 @@ class Enemy(Entity):
             self.direction = self.get_player_distance_direction(player)[1]
             if attack_type == 'weapon':
                 self.health -= player.get_full_weapon_damage()
+                player.burst += randint(1,5)
             else:
-                pass
+                self.health += player.get_full_magic_damage()
             self.hit_time = pygame.time.get_ticks()
             self.vulberable = False
 
-    def check_death(self):
+    def check_death(self,player):
         if self.health <= 0:
+            player.gain_exp(self.exp)
             self.kill()
             self.trigger_death_particles(self.rect.center,self.monster_name)
 
@@ -135,8 +138,8 @@ class Enemy(Entity):
         self.move(self.speed)
         self.animate()
         self.cooldowns()
-        self.check_death()
 
     def enemy_update(self,player):
         self.get_status(player)
         self.actions(player)
+        self.check_death(player)
