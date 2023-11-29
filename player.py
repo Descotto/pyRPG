@@ -30,7 +30,7 @@ class Player(Entity):
         self.clicked = False
 
         # class
-        self.job = 'Arcane_Reaver'
+        self.job = 'BattleMage'
         
                          
                        
@@ -63,17 +63,18 @@ class Player(Entity):
             'magic_power': LevelChart[self.job][str(self.level)]['int'],
             'speed':LevelChart[self.job][str(self.level)]['speed'],
             'recovery_rate':LevelChart[self.job]['recovery_rate'],
-            'exp_cap': 100,
-            'burst': 0}
+            'exp_cap': 100}
         self.health = self.stats['health']
         self.energy = self.stats['energy']
         self.exp_cap = self.stats['exp_cap']
         self.speed = self.stats['speed']
         self.recovery_rate = self.stats['recovery_rate']
+        self.attack = self.stats['attack']
 
         # experience and bursts
         self.exp = 1
         self.burst = 0
+        self.bursting = False
 
         # damage timers
         self.vulnerable = True
@@ -123,8 +124,13 @@ class Player(Entity):
                 self.attacking = True
                 self.attack_time = pygame.time.get_ticks()
                 self.create_attack()
-               
+                self.bursting = False
                 self.clicked == False
+
+            if keys[pygame.K_b] or self.clicked == 'burst':
+                if self.burst == 100:
+                    self.bursting = True
+                
 
             if keys[pygame.K_RSHIFT] or self.clicked == 'magic':
                 self.attacking = True
@@ -180,6 +186,19 @@ class Player(Entity):
                         self.magic_index = 0
                     self.magic = list(magic_data.keys())[self.magic_index]
                     self.clicked == False
+
+    # ABILITIES
+    def flat_strike(self):
+        # keep burst up to 100
+        if self.burst > 100:
+            self.burst = 100
+
+        # When active, your attack power will continue to go up until you make an attack
+        if self.bursting:
+            self.attack += 0.08
+        else:
+            self.attack = self.stats['attack']
+
 
     def get_status(self):
 
@@ -246,7 +265,7 @@ class Player(Entity):
             self.image.set_alpha(255)
 
     def get_full_weapon_damage(self):
-        base_damage = self.stats['attack']
+        base_damage = self.attack
         weapon_damage = weapon_data[self.weapon]['damage']
         return base_damage + weapon_damage
 
@@ -264,7 +283,7 @@ class Player(Entity):
         self.exp += (exp_value // self.level)
         if self.exp >= current_exp_cap:
             self.level_up(current_exp_cap)
-            print('BURSTING', self.burst)
+            
         else:
             pass
 
@@ -282,14 +301,13 @@ class Player(Entity):
             'exp_cap': self.exp_cap}
             self.health = self.stats['health']
             self.energy = self.stats['energy']
-            print('LEVEL UP! level:',self.level)
-            print('NEXT LEVEL = ', self.exp_cap, 'TEST HP =', self.stats['health'])
+            
         else:
             self.exp = self.exp_cap
 
     def update(self):
         self.input()
-        
+        self.flat_strike()
         self.cooldowns()
         self.get_status()
         self.animate()

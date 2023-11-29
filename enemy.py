@@ -117,6 +117,7 @@ class Enemy(Entity):
             self.direction = self.get_player_distance_direction(player)[1]
             if attack_type == 'weapon':
                 self.health -= player.get_full_weapon_damage()
+                # Player's Burst goes up
                 player.burst += randint(1,5)
             else:
                 self.health += player.get_full_magic_damage()

@@ -109,7 +109,6 @@ class Level:
         if style == 'flame':
             self.magic_player.flame(self.player,cost,[self.visible_sprites,self.attack_sprites])
 
-
     def destroy_attack(self):
         if self.current_attack:
             self.current_attack.kill()
@@ -133,6 +132,7 @@ class Level:
     def damage_player(self,amount,attack_type):
         if self.player.vulnerable:
             self.player.health -= amount
+            self.player.burst += 1
             self.player.vulnerable = False
             self.player.hurt_time = pygame.time.get_ticks()
             self.animation_player.create_particles(attack_type,self.player.rect.center,[self.visible_sprites])
@@ -162,7 +162,7 @@ class YSortCameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
 
         #creating floor
-        self.floor_surf = pygame.image.load('./assets/1 - level/graphics/tilemap/ground.png').convert()
+        self.floor_surf = pygame.image.load('./assets/chrono/tilemap/ground.png').convert()
         self.floor_rect = self.floor_surf.get_rect(topleft = (0,0))
         # Create and add buttons to YSortCameraGroup
     
